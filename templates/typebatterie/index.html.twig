@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des types de batteries{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<br><br><br><br><br>
+<div class="example-wrapper">
+    <h1>Liste des types de batteries</h1>
+    <br>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Référence</th>
+                <th>Capacité (Watts)</th>
+                <th>Pays</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for batterie in batteries %}
+                <tr>
+                    <td>
+                        <a href="{{ path('edit_typebatterie', {id: batterie.id}) }}">{{ batterie.reference }}</a>
+                    </td>
+                    <td>{{ batterie.capacite }}</td>
+                    <td>{{ batterie.pays }}</td>
+                    <td>
+                        <form action="{{ path('delete_typebatterie', {id: batterie.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette batterie ?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">Aucune batterie disponible</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
